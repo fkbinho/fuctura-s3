@@ -55,6 +55,13 @@ public class CategoriaService {
         categoriaRepository.deleteById(id);
     }
 
+    public void findByNome (String nome){
+        Optional<Categoria> categoria = categoriaRepository.findByNomeContainingIgnoreCase(nome);
+        if (categoria.isEmpty()) {
+            throw new ObjectNotFoundException("Categoria '" + nome + "' não encontrada.");
+        }
+    }
+
     private void findByNome(CategoriaDto categoriaDto) {
         Optional<Categoria> cat = categoriaRepository.findByNome(categoriaDto.getNome());
         if(cat.isPresent() && cat.get().getNome().equalsIgnoreCase(categoriaDto.getNome())) {
