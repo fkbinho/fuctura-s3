@@ -15,4 +15,5 @@ public interface LivroRepository extends JpaRepository<Livro, Integer> {
     List<Livro> findAllLivrosByCategoria(@Param(value = "id_cat") Integer id_cat);
 
     List<Livro> findByCategoriaNomeContainingIgnoreCase(String nome_cat);
+
 }
