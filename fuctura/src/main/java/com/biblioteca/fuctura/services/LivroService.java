@@ -1,10 +1,9 @@
 package com.biblioteca.fuctura.services;
 
-import com.biblioteca.fuctura.exceptions.IllegalArgumentException;
+import com.biblioteca.fuctura.dtos.LivroDto;
 import com.biblioteca.fuctura.exceptions.ObjectNotFoundException;
 import com.biblioteca.fuctura.models.Categoria;
 import com.biblioteca.fuctura.models.Livro;
-import com.biblioteca.fuctura.repositories.CategoriaRepository;
 import com.biblioteca.fuctura.repositories.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,4 +41,20 @@ public class LivroService {
         categoriaService.findByNome(nome_cat);
         return livroRepository.findByCategoriaNomeContainingIgnoreCase(nome_cat);
     }
+
+    public Livro save(Integer id_cat, LivroDto livroDto) {
+        livroDto.setId(null);
+        Categoria cat = categoriaService.findById(id_cat);
+        livroDto.setCategoria(cat);
+
+        return livroRepository.save(new Livro(livroDto));
+    }
+
+    public Livro update(Integer id, LivroDto livroDto) {
+        Livro livro = findById(id);
+        livroDto.setId(livro.getId());
+        return livroRepository.save(new Livro(livroDto));
+    }
+
+
 }
