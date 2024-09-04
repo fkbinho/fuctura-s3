@@ -3,6 +3,7 @@ package com.biblioteca.fuctura.controllers;
 import com.biblioteca.fuctura.dtos.LivroDto;
 import com.biblioteca.fuctura.models.Livro;
 import com.biblioteca.fuctura.services.LivroService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/livro")
+@CrossOrigin("*")
 public class LivroController {
 
     @Autowired
@@ -30,6 +32,7 @@ public class LivroController {
 //                .map(LivroDto::new).collect(Collectors.toList()));
 //    }
     @GetMapping
+    @Operation(summary = "Buscar todos os livros de acordo com um id de uma categoria específica.")
     public ResponseEntity<List<LivroDto>> findByAllCategoria(@RequestParam(value = "categoria", defaultValue = "0") Integer id) {
         List<Livro> list = livroService.findByCategoria(id);
         return ResponseEntity.ok().body(list.stream().map(obj -> new LivroDto(obj)).collect(Collectors.toList()));

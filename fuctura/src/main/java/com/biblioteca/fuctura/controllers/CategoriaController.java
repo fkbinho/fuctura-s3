@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,13 +43,13 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoriaDto> save(@RequestBody CategoriaDto categoriaDto){
+    public ResponseEntity<CategoriaDto> save(@Valid @RequestBody CategoriaDto categoriaDto){
         Categoria cat = categoriaService.save(categoriaDto);
         return ResponseEntity.ok().body(modelMapper.map(cat, CategoriaDto.class));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoriaDto> update(@PathVariable Integer id, @RequestBody CategoriaDto categoriaDto){
+    public ResponseEntity<CategoriaDto> update(@PathVariable Integer id, @Valid @RequestBody CategoriaDto categoriaDto){
         categoriaDto.setId(id);
         Categoria cat = categoriaService.update(categoriaDto);
         return ResponseEntity.ok().body(modelMapper.map(cat, CategoriaDto.class));
